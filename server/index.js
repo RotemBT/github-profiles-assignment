@@ -1,22 +1,10 @@
 const express = require('express');
-const cors = require('cors');
 const { resolve } = require('path');
-
+require('dotenv').config();
 const app = express();
 const port = 3010;
+require('./routes/api.route')(app);
 
-app.use(cors());
-
-app.get('/api/beatles', (req, res) => {
-  res.json({
-    data: [
-      { name: 'John' },
-      { name: 'Paul' },
-      { name: 'George' },
-      { name: 'Ringo' },
-    ],
-  });
-});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
