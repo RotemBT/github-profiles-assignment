@@ -8,17 +8,11 @@ const options = {
 };
 
 const getGithubProfiles = async (req, res) => {
-    const { search ="sharon" } = req.query;
+    const { q, page } = req.query;
     try {
-        const response = await axios.get(`https://api.github.com/search/users?q=${search}`, options);
-        const linkHeader = response.headers.link;
-        const hasNext = linkHeader && linkHeader.includes(`rel=\"next\"`);
+        const response = await axios.get(`https://api.github.com/search/users?q=${q}${page ? `&page=${page}` : ''}`, options);
         const data = response?.data?.items.map(item => ({ name: item.login, img: item.avatar_url }))
-        res.json({
-            hasNext,
-            totalCount: response.data.total_count,
-            data,
-        });
+        res.json(data);
     } catch (err) {
         res.status(err.statusCode).json({ message: err.message });
     }
