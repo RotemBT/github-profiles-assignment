@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SERVICE_URL = "http://localhost:3010/api";
+const SERVICE_URL = "http://localhost:3010/api/search-users";
 export default async function getUsers(q: string, page: number) {
     const urlSearchParams = new URLSearchParams({q, page: String(page)});
     return await axios.get(`${SERVICE_URL}?${urlSearchParams.toString()}`, {});

@@ -10,7 +10,6 @@
     gap: 20px;
 
     &-user {
-      position: relative;
       display: flex;
       flex-direction: column;
       gap: 5px;
@@ -18,24 +17,29 @@
       text-align: center;
       font-weight: bold;
 
-      img {
-        cursor: pointer;
-        border-radius: 10px;
-        border: 2px solid #ffffff;
-        width: 150px;
-        height: 150px;
-      }
+      &-image {
+        width: 167px;
+        position: relative;
 
-      &-pub-repos {
-        background-color: #000;
-        color: #fff;
-        width: 18px;
-        padding: 5px;
-        border-radius: 20px;
-        position: absolute;
-        top: 0;
-        right: 76px;
-        z-index: 1;
+        img {
+          cursor: pointer;
+          border-radius: 10px;
+          border: 2px solid #ffffff;
+          width: 150px;
+          height: 150px;
+        }
+
+        &-pub-repos {
+          background-color: #000;
+          color: #fff;
+          width: 30px;
+          padding: 5px;
+          border-radius: 20px;
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 1;
+        }
       }
     }
   }

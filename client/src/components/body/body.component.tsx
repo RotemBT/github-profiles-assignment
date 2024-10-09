@@ -33,7 +33,7 @@ export default function UserGrid({ users, loading, hasNextPage, onIncrementPage 
                 scrollableContainer.removeEventListener('scroll', handleScroll);
             };
         }
-    }, [handleScroll]);
+    }, [handleScroll, ref]);
     return (
         <main className="body-wrapper" ref={ref}>
             <h2>
