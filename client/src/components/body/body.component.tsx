@@ -40,8 +40,8 @@ export default function UserGrid({ users, loading, hasNextPage, onIncrementPage 
                 Search Results
             </h2>
             <div className="body-wrapper-grid">
-                {(users || []).map(({name, img}) => (
-                    <UserContainer img={img} key={name} name={name} />
+                {(users || []).map(({name, img, publicRepos}) => (
+                    <UserContainer img={img} key={name} name={name} publicRepos={publicRepos} />
                 ))}
             </div>
             {loading && <p>Loading...</p>}
