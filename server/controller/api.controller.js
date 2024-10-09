@@ -9,16 +9,14 @@ const options = {
     }
 };
 
-const getGithubProfiles = async (req, res) => {
-    const { q, page } = req.query;
+const getGithubUsers = async (req, res) => {
     try {
+        const urlSearchParams = new URLSearchParams(req.query);
+        const params = urlSearchParams.toString();
         const response = await axios.get(
-            `${GITHUB_SERVICE_URL}/search/users?q=${q}${page ? `&page=${page}` : ''}`,
+            `${GITHUB_SERVICE_URL}/search/users?${params}`,
             options
         );
-        if (!response?.data?.items) {
-            return res.status(404).json({ message: 'No user found.' });
-        }
         const data = await Promise.all(
             response?.data?.items.map(user => axios.get(
                 `${GITHUB_SERVICE_URL}/users/${user.login}`,
@@ -36,10 +34,10 @@ const getGithubProfiles = async (req, res) => {
         }).filter(Boolean);
         res.json(usersData);
     } catch (err) {
-        res.status(err.statusCode).json({ message: err.message });
+        res.status(err.status).json({ message: err.message });
     }
 };
 
 module.exports = {
-    getGithubProfiles,
+    getGithubUsers,
 }
