@@ -3,5 +3,5 @@ const { getGithubProfiles } = require("../controller/api.controller");
 
 module.exports = (app) => {
     app.use(cors());
-    app.get('/api', getGithubProfiles);
+    app.get('/api/search-users', getGithubProfiles);
 };

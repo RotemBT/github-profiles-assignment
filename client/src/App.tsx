@@ -1,26 +1,41 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useCallback, useEffect, useState } from 'react';
+import Header from "./components/header/header.component.tsx";
+import UserGrid from "./components/body/body.component.tsx";
+import getUsers from "./utils/users.service.ts";
+import UserData from "./utils/schema.ts";
 import './App.css';
 
 function App() {
-  const [beatles, setBeatles] = useState([]);
+    const [users, setUsers] = useState<UserData[]>([]);
+    const [filter, setFilter] = useState<string>("");
+    const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+    const [page, setPage] = useState<number>(1);
+    const [loading, setLoading] = useState<boolean>(false);
+    const onChangeFilter = useCallback((value: SetStateAction<string>) => {
+      setFilter(value);
+      setUsers([]);
+      setPage(1);
+    }, []);
+    const onIncrementPage = useCallback(() => setPage((prevState: number) => prevState + 1), []);
 
-  useEffect(() => {
-    fetch('http://localhost:3010/api/beatles', {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .then(({ data }) => {
-        console.log(data);
-        setBeatles(data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+    useEffect(() => {
+        const fetchUsers = async (pageNumber: number) => {
+          setLoading(true);
+          const newUsers: UserData[] = (await getUsers(filter, pageNumber))?.data;
+          setUsers(prevState => [...prevState, ...newUsers]);
+          setHasNextPage(!!newUsers.length);
+          setLoading(false);
+        }
+        if (filter) {
+          fetchUsers(page);
+        }
+    }, [filter, page]);
+
   return (
-    <ul>
-      {beatles.map(({ name }) => (
-        <li key={name}>{name}</li>
-      ))}
-    </ul>
+    <>
+        <Header onChangeFilter={onChangeFilter} filter={filter} />
+        <UserGrid users={users} loading={loading} hasNextPage={hasNextPage} onIncrementPage={onIncrementPage} />
+    </>
   );
 }
 

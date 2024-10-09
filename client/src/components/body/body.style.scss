@@ -1,0 +1,46 @@
+.body-wrapper {
+  height: calc(100vh - 203px);
+  padding: 0px 20px 20px 20px;
+  overflow-y: scroll;
+
+  &-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 170px);
+    gap: 20px;
+
+    &-user {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+
+      &-image {
+        width: 167px;
+        position: relative;
+
+        img {
+          cursor: pointer;
+          border-radius: 10px;
+          border: 2px solid #ffffff;
+          width: 150px;
+          height: 150px;
+        }
+
+        &-pub-repos {
+          background-color: #000;
+          color: #fff;
+          width: 30px;
+          padding: 5px;
+          border-radius: 20px;
+          position: absolute;
+          top: 0;
+          right: 0;
+          z-index: 1;
+        }
+      }
+    }
+  }
+}
