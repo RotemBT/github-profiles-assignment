@@ -3,16 +3,16 @@ import { useMemo, useState} from "react";
 import debounce from "../../utils/utlis.ts";
 
 interface HeaderProps {
-    onChangeFilter: (newFilter: string) => void;
-    filter: string;
+    onChangeSearch: (newSearch: string) => void;
+    search: string;
 }
 
-function Header({ filter, onChangeFilter }: HeaderProps) {
-    const [searchInput, setSearchInput] = useState<string>(filter || '');
+function Header({ search, onChangeSearch }: HeaderProps) {
+    const [searchInput, setSearchInput] = useState<string>(search || '');
     const debounceFunc = useMemo(() => debounce((func, props) => func(...props), 300), []);
     const onSearch = (value: string) => {
         setSearchInput(value);
-        debounceFunc(() => onChangeFilter(value), [onChangeFilter])
+        debounceFunc(() => onChangeSearch(value), [onChangeSearch])
     };
     return (
         <header className="header">
